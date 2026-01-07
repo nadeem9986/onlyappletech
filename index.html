@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Only Apple Tech | Apple Repair Specialists in Bangalore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#1c1c1c',
+                            foreground: '#fafafa',
+                        },
+                        secondary: {
+                            DEFAULT: '#f4f4f5',
+                            foreground: '#1c1c1c',
+                        },
+                        muted: {
+                            DEFAULT: '#f4f4f5',
+                            foreground: '#71717a',
+                        },
+                        accent: {
+                            DEFAULT: '#f4f4f5',
+                            foreground: '#1c1c1c',
+                        },
+                        card: {
+                            DEFAULT: '#ffffff',
+                            foreground: '#1c1c1c',
+                        },
+                        border: '#e4e4e7',
+                    },
+                    borderRadius: {
+                        '3xl': '1.5rem',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Navbar -->
+    <nav class="sticky top-4 z-50 mx-4 lg:mx-8 rounded-2xl border border-border/40 transition-all duration-300 liquid-glass">
+        <div class="w-full px-6 h-16 flex items-center justify-between relative z-10">
+            <div class="flex items-center gap-2">
+                <div class="bg-primary text-primary-foreground p-1.5 rounded-lg">
+                    <i data-lucide="zap" class="w-4 h-4"></i>
+                </div>
+                <span class="text-lg font-bold tracking-tight">Only Apple Tech</span>
+            </div>
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium text-black">
+                <a href="#services" class="liquid-glass px-4 py-1.5 rounded-full text-black hover:text-primary transition-colors">Services</a>
+                <a href="#reviews" class="liquid-glass px-4 py-1.5 rounded-full text-black hover:text-primary transition-colors">Reviews</a>
+                <a href="#contact" class="liquid-glass px-4 py-1.5 rounded-full text-black hover:text-primary transition-colors">Contacts</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="liquid-glass bg-secondary text-secondary-foreground border border-border px-5 py-2 rounded-full text-sm font-medium hover:bg-muted transition-all duration-200 shadow-sm" onclick="document.getElementById('inquiry').scrollIntoView({ behavior: 'smooth' })">
+                    Get Estimate
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1">
+        <!-- Hero Section -->
+        <section class="relative overflow-hidden py-24 lg:py-32">
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="flex flex-col lg:flex-row items-center gap-12">
+                    <div class="flex-1 text-center lg:text-left">
+                        <span class="inline-block mb-4 py-1 px-4 text-sm font-medium bg-secondary text-secondary-foreground rounded-full">
+                            #1 Apple Repair Specialists in Bangalore
+                        </span>
+                        <h1 class="text-5xl lg:text-7xl font-bold tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-b from-black to-black/60">
+                            Your Apple Devices, <br />
+                            <span class="text-primary">Restored to Perfection.</span>
+                        </h1>
+                        <p class="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto lg:mx-0">
+                            Expert repair services for iPhones, MacBooks, iPads, and more. 
+                            Genuine parts, quick turnaround, and 100% satisfaction guaranteed.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                            <button class="liquid-glass bg-zinc-500 text-white border border-border h-14 px-8 text-lg font-medium rounded-full hover:bg-zinc-600 transition-all duration-200 shadow-sm" onclick="document.getElementById('inquiry').scrollIntoView({ behavior: 'smooth' })">
+                                Start Repair Inquiry
+                            </button>
+                            <a href="tel:9123456789" class="liquid-glass inline-flex items-center justify-center border border-border h-14 px-8 text-lg font-medium rounded-full hover:bg-secondary transition-colors">
+                                <i data-lucide="phone" class="w-5 h-5 mr-2"></i>
+                                91234 56789
+                            </a>
+                        </div>
+                        <div class="mt-12 flex items-center justify-center lg:justify-start gap-8 text-muted-foreground">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="shield-check" class="w-5 h-5 text-primary"></i>
+                                <span class="text-sm font-medium">Warranty Provided</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="zap" class="w-5 h-5 text-primary"></i>
+                                <span class="text-sm font-medium">Express Service</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-1 relative hidden lg:block">
+                        <div class="relative aspect-square max-w-lg mx-auto">
+                            <img src="images/hero-iphone.webp" alt="Apple Repair Service" class="object-cover rounded-3xl shadow-2xl transition-all duration-700 w-full h-full">
+                            <div class="absolute -bottom-6 -left-6 bg-white border border-border p-6 rounded-2xl shadow-xl hidden md:block animate-bounce-slow">
+                                <div class="flex items-center gap-4">
+                                    <div class="bg-green-500/10 p-3 rounded-full text-green-500">
+                                        <i data-lucide="star" class="w-6 h-6 fill-current"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-bold text-lg">4.9/5 Rating</div>
+                                        <div class="text-sm text-muted-foreground">Verified Customer Reviews</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute top-0 right-0 -z-10 w-1/3 h-1/2 bg-black/5 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
+            <div class="absolute bottom-0 left-0 -z-10 w-1/4 h-1/3 bg-black/10 blur-3xl rounded-full -translate-x-1/2 translate-y-1/2"></div>
+        </section>
+
+        <!-- Device Showcase Slider -->
+        <section class="bg-white border-y py-12">
+            <div class="w-full max-w-5xl mx-auto px-4">
+                <div class="text-center mb-10">
+                    <span class="inline-block mb-2 py-1 px-3 text-xs font-semibold border border-border rounded-full">Device Showcase</span>
+                    <h2 class="text-3xl font-bold tracking-tight">Expert Repairs for All Apple Devices</h2>
+                </div>
+                
+                <div class="max-w-3xl mx-auto" id="device-showcase-container">
+                    <!-- Single Card will be injected here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Inquiry Section -->
+        <section id="inquiry" class="py-24 bg-accent/30">
+            <div class="max-w-4xl mx-auto px-4 py-12">
+                <div class="mb-8 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-3xl font-bold tracking-tight">Get a Free Quote in Minutes</h2>
+                        <p class="text-muted-foreground">Tell us what's wrong — we'll reply on WhatsApp.</p>
+                    </div>
+                    <div class="flex gap-2" id="step-indicators">
+                        <div class="h-1.5 w-8 rounded-full bg-primary" data-step="1"></div>
+                        <div class="h-1.5 w-8 rounded-full bg-muted" data-step="2"></div>
+                        <div class="h-1.5 w-8 rounded-full bg-muted" data-step="3"></div>
+                    </div>
+                </div>
+
+                <div id="repair-inquiry-container">
+                    <!-- Step 1: Device Selection -->
+                    <div class="step-content active" id="step-1">
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="device-list">
+                            <!-- Devices injected by JS -->
+                        </div>
+                        <p class="text-sm text-muted-foreground text-center mt-4">
+                            Don't see your exact model? Just pick the closest one — we'll confirm the details later.
+                        </p>
+                    </div>
+
+                    <!-- Step 2: Problem Selection -->
+                    <div class="step-content" id="step-2">
+                        <button class="mb-6 -ml-2 text-muted-foreground flex items-center hover:text-primary transition-colors" onclick="goToStep(1)">
+                            <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back
+                        </button>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="problem-list">
+                            <!-- Problems injected by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Contact Form -->
+                    <div class="step-content" id="step-3">
+                        <button class="mb-6 -ml-2 text-muted-foreground flex items-center hover:text-primary transition-colors" onclick="goToStep(2)">
+                            <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back
+                        </button>
+                        <div class="bg-white rounded-xl border border-border p-8 shadow-sm">
+                            <form id="quote-form" class="space-y-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="space-y-2">
+                                        <label for="name" class="text-sm font-medium leading-none">Your Name</label>
+                                        <input type="text" id="name" name="name" placeholder="e.g. Rahul" required class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="phone" class="text-sm font-medium leading-none">Alternate Number</label>
+                                        <input type="text" id="phone" name="phone" placeholder="e.g. 91234 56789" class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                                    </div>
+                                </div>
+                                <div class="space-y-2">
+                                    <label for="model" class="text-sm font-medium leading-none">Your Device Model</label>
+                                    <input type="text" id="model" name="model" placeholder="e.g. iPhone 14 Pro, MacBook Air M2" required class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                                </div>
+                                <div class="space-y-2">
+                                    <label for="description" class="text-sm font-medium leading-none">Anything else we should know? (Optional)</label>
+                                    <textarea id="description" name="description" placeholder="e.g. Screen cracked after a drop, phone gets hot..." class="flex min-h-[100px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"></textarea>
+                                </div>
+                                <button type="submit" class="w-full min-h-[3.5rem] py-3 px-6 text-lg bg-[#25D366] hover:bg-[#22c35e] text-white font-bold rounded-xl flex items-center justify-center gap-3 transition-all duration-200 shadow-md active:scale-[0.98]">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="shrink-0">
+                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                    </svg>
+                                    <span class="text-center">Send & Get Quote on WhatsApp</span>
+                                </button>
+                                <p class="text-xs text-center text-muted-foreground">
+                                    Free diagnosis · No obligation · Same-day repair available
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <!-- Success Overlay -->
+    <div class="success-overlay" id="success-overlay">
+        <div class="bg-white border border-border shadow-2xl rounded-3xl p-8 max-w-lg w-full text-center relative overflow-hidden mx-4">
+            <div class="absolute top-0 left-0 w-full h-2 bg-primary"></div>
+            <div class="flex justify-center mb-6">
+                <div class="bg-primary/10 p-5 rounded-full text-primary">
+                    <i data-lucide="check-circle-2" class="w-16 h-16"></i>
+                </div>
+            </div>
+            <h2 class="text-3xl font-bold mb-4 tracking-tight">Thank You for Choosing Us!</h2>
+            <div class="space-y-4 text-muted-foreground mb-8 text-center">
+                <p class="text-lg leading-relaxed">
+                    Your inquiry has been successfully received. Our expert technicians are already reviewing your request and will get back to you within the next 2 hours.
+                </p>
+                <div class="bg-secondary/50 p-4 rounded-xl border border-dashed border-primary/20">
+                    <p class="text-sm font-medium text-primary mb-3">Didn't open WhatsApp? Click below:</p>
+                    <a id="whatsapp-direct-link" href="#" target="_blank" class="bg-[#25D366] text-white w-full h-12 flex items-center justify-center gap-2 rounded-lg font-bold hover:bg-[#22c35e] transition-colors shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                        Chat on WhatsApp Now
+                    </a>
+                </div>
+            </div>
+            <button onclick="resetInquiry()" class="bg-primary text-primary-foreground w-full h-14 text-lg rounded-xl font-medium hover:bg-primary/90 transition-colors">
+                Back to Home
+            </button>
+        </div>
+    </div>
+
+        <!-- Services Section -->
+        <section id="services" class="py-24">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold tracking-tight mb-4">What We Can Fix</h2>
+                    <p class="text-muted-foreground max-w-2xl mx-auto">
+                        From simple screen replacements to complex motherboard repairs, 
+                        we handle everything with precision and care.
+                    </p>
+                </div>
+                <div class="max-w-3xl mx-auto" id="service-cards">
+                    <!-- Single Card will be injected here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews Section -->
+        <section id="reviews" class="py-24 bg-accent/30">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row items-end justify-between mb-16 gap-4">
+                    <div class="text-left">
+                        <h2 class="text-4xl font-bold tracking-tight mb-4">Customer Stories</h2>
+                        <p class="text-muted-foreground max-w-2xl">
+                            Don't just take our word for it. Here's what our customers have to say 
+                            about their experience with Only Apple Tech.
+                        </p>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="https://www.google.com/search?sxsrf=AE3TifM-KzA5rSH8WagAkCzDBPIjcPdfdg:1767681672812&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-E4LfywmliIwJx6nVai_3pLm-VtpOPYqv8cqRHy1T_72S6b5AZk9PvWc9biP7qajbZswEFGfordI9I3rXtPWVIpB6Mw69&q=Only+Apple+Tech+Reviews" target="_blank" class="inline-flex items-center justify-center border border-border px-6 py-3 rounded-xl font-medium hover:bg-white transition-colors shadow-sm">
+                            View All Google Reviews <i data-lucide="external-link" class="w-4 h-4 ml-2"></i>
+                        </a>
+                        <a href="https://www.google.com/search?sxsrf=AE3TifM-KzA5rSH8WagAkCzDBPIjcPdfdg:1767681672812&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-E4LfywmliIwJx6nVai_3pLm-VtpOPYqv8cqRHy1T_72S6b5AZk9PvWc9biP7qajbZswEFGfordI9I3rXtPWVIpB6Mw69&q=Only+Apple+Tech+Reviews#lrd=0x3bae15c374acf33b:0xbb5549016731b438,3,,,," target="_blank" class="inline-flex items-center justify-center bg-primary text-primary-foreground px-6 py-3 rounded-xl font-medium hover:bg-primary/90 transition-colors shadow-sm">
+                            <i data-lucide="pen-tool" class="w-4 h-4 mr-2"></i> Write a Review
+                        </a>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="reviews-list">
+                    <!-- Reviews injected by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-24 border-t">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold tracking-tight mb-4">Frequently Asked Questions</h2>
+                    <p class="text-muted-foreground max-w-2xl mx-auto">
+                        Everything you need to know about our repair services.
+                    </p>
+                </div>
+                <div class="max-w-3xl mx-auto space-y-4">
+                    <div class="border border-border rounded-xl overflow-hidden bg-white">
+                        <button class="w-full p-6 text-left flex items-center justify-between hover:bg-secondary/50 transition-colors" onclick="toggleFaq(this)">
+                            <span class="font-bold text-lg">Do you provide a warranty on repairs?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300"></i>
+                        </button>
+                        <div class="px-6 pb-6 text-muted-foreground hidden">
+                            Yes, we provide a 90-day warranty on all screen and part replacements. This covers any manufacturing defects or touch-related issues.
+                        </div>
+                    </div>
+                    <div class="border border-border rounded-xl overflow-hidden bg-white">
+                        <button class="w-full p-6 text-left flex items-center justify-between hover:bg-secondary/50 transition-colors" onclick="toggleFaq(this)">
+                            <span class="font-bold text-lg">Do you use genuine Apple parts?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300"></i>
+                        </button>
+                        <div class="px-6 pb-6 text-muted-foreground hidden">
+                            We use high-quality OEM (Original Equipment Manufacturer) parts that meet or exceed original specifications. For certain repairs, we also offer certified original pulled parts.
+                        </div>
+                    </div>
+                    <div class="border border-border rounded-xl overflow-hidden bg-white">
+                        <button class="w-full p-6 text-left flex items-center justify-between hover:bg-secondary/50 transition-colors" onclick="toggleFaq(this)">
+                            <span class="font-bold text-lg">How long does a typical repair take?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300"></i>
+                        </button>
+                        <div class="px-6 pb-6 text-muted-foreground hidden">
+                            Most iPhone screen and battery replacements are completed within 60-90 minutes. MacBook repairs typically take 1-2 business days depending on parts availability.
+                        </div>
+                    </div>
+                    <div class="border border-border rounded-xl overflow-hidden bg-white">
+                        <button class="w-full p-6 text-left flex items-center justify-between hover:bg-secondary/50 transition-colors" onclick="toggleFaq(this)">
+                            <span class="font-bold text-lg">Is my data safe during repair?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300"></i>
+                        </button>
+                        <div class="px-6 pb-6 text-muted-foreground hidden">
+                            While we take every precaution to protect your data, we always recommend backing up your device before any repair. We do not access your personal data during the process.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-8">
+                        <div>
+                            <h2 class="text-4xl font-bold tracking-tight mb-4">Visit Our Store</h2>
+                            <p class="text-muted-foreground">
+                                Located in the heart of Bangalore, we're ready to help you with 
+                                any Apple device issues.
+                            </p>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-primary/10 p-3 rounded-full shrink-0 text-primary">
+                                    <i data-lucide="map-pin" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-lg">Location</div>
+                                    <p class="text-muted-foreground">1st Cross Rd, Sampangi Rama Nagar, Bengaluru, Karnataka 560027</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="bg-primary/10 p-3 rounded-full shrink-0 text-primary">
+                                    <i data-lucide="phone" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-lg">Call Us</div>
+                                    <p class="text-muted-foreground">+91 91234 56789</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="bg-primary/10 p-3 rounded-full shrink-0 text-primary">
+                                    <i data-lucide="mail" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-lg">Email</div>
+                                    <p class="text-muted-foreground">nadeemise2025@gmail.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="https://maps.app.goo.gl/gFTYAP4g6efVdeNF8" target="_blank" class="inline-flex items-center justify-center bg-primary text-primary-foreground h-14 px-12 rounded-md font-bold text-lg hover:bg-primary/90 transition-colors w-full sm:w-auto">
+                            Get Directions
+                        </a>
+                    </div>
+                    <div class="rounded-3xl overflow-hidden h-[450px] shadow-2xl border">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d500.0!2d77.5955386!3d12.8910026!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae15c374acf33b%3A0xbb5549016731b438!2sOnly%20Apple%20Tech!5e0!3m2!1sen!2sin!4v1735393664716!5m2!1sen!2sin"
+                            width="100%"
+                            height="100%"
+                            style="border: 0"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                        ></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t py-12">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex items-center justify-center gap-2 mb-8">
+                <i data-lucide="zap" class="w-6 h-6 text-primary"></i>
+                <span class="text-2xl font-bold tracking-tight">Only Apple Tech</span>
+            </div>
+            <p class="text-muted-foreground mb-8 max-w-md mx-auto">
+                The most trusted Apple repair service in Bangalore. Expert technicians, genuine parts, 
+                and customer satisfaction is our top priority.
+            </p>
+            <div class="flex items-center justify-center gap-6 mb-12">
+                <a href="https://facebook.com/onlyappletech" target="_blank" class="text-muted-foreground hover:text-primary transition-colors" aria-label="Facebook"><i data-lucide="facebook" class="w-6 h-6"></i></a>
+                <a href="https://instagram.com/onlyappletech" target="_blank" class="text-muted-foreground hover:text-primary transition-colors" aria-label="Instagram"><i data-lucide="instagram" class="w-6 h-6"></i></a>
+                <a href="https://twitter.com/onlyappletech" target="_blank" class="text-muted-foreground hover:text-primary transition-colors" aria-label="Twitter"><i data-lucide="twitter" class="w-6 h-6"></i></a>
+            </div>
+            <div class="text-sm text-muted-foreground">
+                © <span id="current-year"></span> Only Apple Tech. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/919123456789" target="_blank" class="fixed bottom-6 right-6 z-[60] bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform duration-300 group" aria-label="Chat on WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        <span class="absolute right-full mr-4 top-1/2 -translate-y-1/2 bg-white text-primary border border-border px-3 py-1.5 rounded-lg text-sm font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-xl">
+            Chat with Experts
+        </span>
+    </a>
+
+    <script src="script.js"></script>
+    <!-- Liquid Glass SVG Filter -->
+    <svg xmlns="http://www.w3.org/2000/svg" role="presentation" style="display: none">
+      <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
+        <feTurbulence type="fractalNoise" baseFrequency="0.001 0.005" numOctaves="1" seed="17" result="turbulence"/>
+        <feComponentTransfer in="turbulence" result="mapped">
+          <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5" />
+          <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
+          <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5" />
+        </feComponentTransfer>
+        <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap" />
+        <feSpecularLighting in="softMap" surfaceScale="5" specularConstant="1" specularExponent="100" lighting-color="white" result="specLight">
+          <fePointLight x="-200" y="-200" z="300" />
+        </feSpecularLighting>
+        <feComposite in="specLight" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litImage" />
+        <feDisplacementMap in="SourceGraphic" in2="softMap" scale="200" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
+</body>
+</html>
