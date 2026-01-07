@@ -1,0 +1,200 @@
+:root {
+    --radius: 0.75rem;
+    --background: #ffffff;
+    --foreground: #1c1c1c;
+    --card: #ffffff;
+    --card-foreground: #1c1c1c;
+    --popover: #ffffff;
+    --popover-foreground: #1c1c1c;
+    --primary: #1c1c1c;
+    --primary-foreground: #fafafa;
+    --secondary: #f4f4f5;
+    --secondary-foreground: #1c1c1c;
+    --muted: #f4f4f5;
+    --muted-foreground: #71717a;
+    --accent: #f4f4f5;
+    --accent-foreground: #1c1c1c;
+    --destructive: #ef4444;
+    --border: #e4e4e7;
+    --input: #e4e4e7;
+    --ring: #1c1c1c;
+}
+
+* {
+    border-color: var(--border);
+}
+
+body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+@keyframes bounce-slow {
+    0%, 100% {
+        transform: translateY(-5%);
+        animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% {
+        transform: translateY(0);
+        animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+}
+
+.animate-bounce-slow {
+    animation: bounce-slow 3s infinite;
+}
+
+.step-content {
+    display: none;
+}
+
+.step-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.success-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(4px);
+}
+
+.success-overlay.active {
+    display: flex;
+}
+
+.carousel-container {
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.7s ease-in-out;
+}
+
+.carousel-item {
+    min-width: 100%;
+    flex-shrink: 0;
+}
+
+.device-carousel-item {
+    padding: 0.25rem;
+}
+
+@media (min-width: 768px) {
+    .device-carousel-item {
+        flex: 0 0 50%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .device-carousel-item {
+        flex: 0 0 33.333333%;
+    }
+}
+
+.service-card-slider {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.service-card-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.service-card-image.active {
+    z-index: 1;
+}
+
+.service-card-image.slide-in {
+    animation: slideIn 0.5s ease-in-out forwards;
+    z-index: 2;
+}
+
+.service-card-image.slide-out {
+    animation: slideOut 0.5s ease-in-out forwards;
+    z-index: 1;
+}
+
+.text-fade-in {
+    animation: textFadeIn 0.5s ease-in-out forwards;
+}
+
+.text-fade-out {
+    animation: textFadeOut 0.5s ease-in-out forwards;
+}
+
+@keyframes textFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes textFadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-10px); }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* Liquid Glass Effect */
+.liquid-glass {
+    position: relative;
+    isolation: isolate;
+    background-color: rgb(255 255 255 / 25%);
+    text-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+    box-shadow: 0 6px 6px rgb(0 0 0 / 20%), 0 0 20px rgb(0 0 0 / 10%);
+    user-select: none;
+    cursor: grab;
+}
+
+.liquid-glass::before,
+.liquid-glass::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+/* Glass distortion effect */
+.liquid-glass::before {
+    backdrop-filter: blur(3px);
+    filter: url(#glass-distortion);
+    z-index: -1;
+}
+
+/* Outline shine */
+.liquid-glass::after {
+    box-shadow: inset 2px 2px 1px 0 rgb(255 255 255 / 50%), inset -1px -1px 1px 1px rgb(255 255 255 / 50%);
+    z-index: 1;
+}
+
+.liquid-glass.dragging {
+    cursor: grabbing;
+}
+
