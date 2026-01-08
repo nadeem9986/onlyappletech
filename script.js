@@ -66,13 +66,88 @@ const reviews = [
     }
 ];
 
+// Custom Apple-style SVG icons
+const deviceIcons = {
+    iphone: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="iphoneGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+        <rect x="18" y="8" width="28" height="48" rx="4" fill="url(#iphoneGrad)" stroke="currentColor" stroke-width="2"/>
+        <circle cx="32" cy="51" r="2" fill="white" opacity="0.8"/>
+        <rect x="26" y="12" width="12" height="2" rx="1" fill="white" opacity="0.6"/>
+    </svg>`,
+    
+    ipad: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="ipadGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#f093fb;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#f5576c;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+        <rect x="12" y="10" width="40" height="44" rx="3" fill="url(#ipadGrad)" stroke="currentColor" stroke-width="2"/>
+        <circle cx="32" cy="50" r="2" fill="white" opacity="0.8"/>
+        <rect x="28" y="14" width="8" height="1.5" rx="0.75" fill="white" opacity="0.6"/>
+    </svg>`,
+    
+    macbook: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="macGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#4facfe;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#00f2fe;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+        <rect x="10" y="16" width="44" height="28" rx="2" fill="url(#macGrad)" stroke="currentColor" stroke-width="2"/>
+        <path d="M8 44 L56 44 L54 48 L10 48 Z" fill="currentColor" opacity="0.3"/>
+        <rect x="28" y="46" width="8" height="1" rx="0.5" fill="currentColor" opacity="0.4"/>
+    </svg>`,
+    
+    watch: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="watchGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#fa709a;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#fee140;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+        <rect x="20" y="18" width="24" height="28" rx="6" fill="url(#watchGrad)" stroke="currentColor" stroke-width="2"/>
+        <rect x="22" y="14" width="20" height="4" rx="1" fill="currentColor" opacity="0.3"/>
+        <rect x="22" y="46" width="20" height="4" rx="1" fill="currentColor" opacity="0.3"/>
+        <circle cx="32" cy="32" r="2" fill="white" opacity="0.9"/>
+    </svg>`,
+    
+    imac: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="imacGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#a8edea;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#fed6e3;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+        <rect x="8" y="12" width="48" height="32" rx="2" fill="url(#imacGrad)" stroke="currentColor" stroke-width="2"/>
+        <rect x="26" y="44" width="12" height="8" fill="currentColor" opacity="0.2"/>
+        <rect x="18" y="52" width="28" height="2" rx="1" fill="currentColor" opacity="0.3"/>
+    </svg>`,
+    
+    other: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="otherGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#ffecd2;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#fcb69f;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+        <circle cx="32" cy="32" r="20" fill="url(#otherGrad)" stroke="currentColor" stroke-width="2"/>
+        <path d="M24 32 L30 38 L40 26" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`
+};
+
 const devices = [
-    { id: "iphone", name: "iPhone", icon: "smartphone" },
-    { id: "macbook", name: "MacBook", icon: "laptop" },
-    { id: "ipad", name: "iPad", icon: "tablet" },
+    { id: "iphone", name: "iPhone", icon: "iphone" },
+    { id: "macbook", name: "MacBook", icon: "macbook" },
+    { id: "ipad", name: "iPad", icon: "ipad" },
     { id: "watch", name: "Apple Watch", icon: "watch" },
-    { id: "imac", name: "iMac", icon: "monitor" },
-    { id: "other", name: "Other", icon: "check-circle-2" },
+    { id: "imac", name: "iMac", icon: "imac" },
+    { id: "other", name: "Other", icon: "other" },
 ];
 
 const deviceProblems = {
@@ -158,9 +233,11 @@ function initSmoothScrolling() {
 function renderDevices() {
     const deviceList = document.getElementById('device-list');
     deviceList.innerHTML = devices.map(device => `
-        <div class="bg-white border border-border p-8 rounded-xl flex flex-col items-center justify-center cursor-pointer transition-all hover:ring-2 hover:ring-primary/50" onclick="handleDeviceSelect('${device.id}')">
-            <i data-lucide="${device.icon}" class="w-10 h-10 mb-4 text-primary"></i>
-            <span class="font-semibold">${device.name}</span>
+        <div class="device-card bg-white border border-border p-8 rounded-xl flex flex-col items-center justify-center cursor-pointer transition-all hover:shadow-lg hover:scale-105 hover:border-primary/50" onclick="handleDeviceSelect('${device.id}')">
+            <div class="device-icon w-16 h-16 mb-4 transition-transform hover:scale-110">
+                ${deviceIcons[device.icon]}
+            </div>
+            <span class="font-semibold text-gray-800">${device.name}</span>
         </div>
     `).join('');
 }
@@ -393,18 +470,6 @@ function handleServiceCarouselLoop() {
     }
 }
 
-// Old service functions - no longer used but kept for compatibility
-function initServiceCardSliders() {
-    // No longer used - service cards now use responsive carousel
-}
-
-function prevServiceSlide() {
-    // No longer used
-}
-
-function nextServiceSlide() {
-    // No longer used
-}
 
 function renderReviews() {
     const reviewsList = document.getElementById('reviews-list');
@@ -687,137 +752,6 @@ window.addEventListener('resize', () => {
     }, 150);
 }, { passive: true });
 
-// Old showcase functions - no longer used but kept for compatibility
-let currentShowcaseIdx = 1;
-let isTransitioning = false;
-let showcaseInterval;
-
-function initDeviceShowcaseSlider() {
-
-
-
-    updateShowcaseUI(false);
-    startShowcaseInterval();
-    
-    window.addEventListener('resize', debounce(() => {
-        updateShowcaseUI(false);
-    }, 100));
-}
-
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-function startShowcaseInterval() {
-    clearInterval(showcaseInterval);
-    showcaseInterval = setInterval(() => {
-        nextShowcaseSlide();
-    }, 5000);
-}
-
-function prevShowcaseSlide() {
-    if (isTransitioning) return;
-    moveShowcaseSlide(-1);
-    startShowcaseInterval();
-}
-
-function nextShowcaseSlide() {
-    if (isTransitioning) return;
-    moveShowcaseSlide(1);
-    startShowcaseInterval();
-}
-
-function goToShowcaseSlide(idx) {
-    if (isTransitioning) return;
-    currentShowcaseIdx = idx + 1;
-    updateShowcaseUI(true);
-    startShowcaseInterval();
-}
-
-function moveShowcaseSlide(direction) {
-    currentShowcaseIdx += direction;
-    updateShowcaseUI(true);
-}
-
-function updateShowcaseUI(withTransition) {
-    const track = document.getElementById('showcase-track');
-    const slides = document.querySelectorAll('.showcase-slide');
-    const dots = document.querySelectorAll('.showcase-dot');
-    if (!track || slides.length === 0) return;
-
-    isTransitioning = true;
-    
-    if (withTransition) {
-        track.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-    } else {
-        track.style.transition = 'none';
-    }
-
-    // Get computed gap and slide width
-    const computedStyle = window.getComputedStyle(track);
-    const gap = parseFloat(computedStyle.gap) || 0;
-    const slideWidth = slides[0].offsetWidth;
-    const containerWidth = track.parentElement.offsetWidth;
-    
-    // Offset to center the current slide perfectly
-    const centerOffset = (containerWidth - slideWidth) / 2;
-    const moveAmount = -(currentShowcaseIdx * (slideWidth + gap)) + centerOffset;
-    
-    track.style.transform = `translateX(${moveAmount}px)`;
-
-    // Update active classes for scaling effect
-    slides.forEach((slide, i) => {
-        if (i === currentShowcaseIdx) {
-            slide.classList.add('active');
-        } else {
-            slide.classList.remove('active');
-        }
-    });
-
-    // Update dots
-    let dotIdx = currentShowcaseIdx - 1;
-    if (dotIdx < 0) dotIdx = showcaseSlides.length - 1;
-    if (dotIdx >= showcaseSlides.length) dotIdx = 0;
-    
-    dots.forEach((dot, i) => {
-        if (i === dotIdx) {
-            dot.classList.add('active');
-        } else {
-            dot.classList.remove('active');
-        }
-    });
-
-    // Handle loop after transition
-    if (withTransition) {
-        setTimeout(() => {
-            handleLoop(track);
-            isTransitioning = false;
-        }, 600);
-    } else {
-        handleLoop(track);
-        isTransitioning = false;
-    }
-}
-
-function handleLoop(track) {
-    if (currentShowcaseIdx <= 0) {
-        currentShowcaseIdx = showcaseSlides.length;
-        track.style.transition = 'none';
-        updateShowcaseUI(false);
-    } else if (currentShowcaseIdx >= showcaseSlides.length + 1) {
-        currentShowcaseIdx = 1;
-        track.style.transition = 'none';
-        updateShowcaseUI(false);
-    }
-}
 
 // Logic Functions
 function toggleFaq(button) {
