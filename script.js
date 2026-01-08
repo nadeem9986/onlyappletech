@@ -124,7 +124,6 @@ const WHATSAPP_NUMBER = "919123456789";
 let currentStep = 1;
 let selectedDevice = "";
 let selectedProblem = "";
-let currentServiceSlide = 0;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -169,61 +168,81 @@ function renderDevices() {
 function renderServiceCards() {
     const serviceCards = document.getElementById('service-cards');
     
-    serviceCards.innerHTML = `
-        <div class="service-card bg-white border border-border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow group">
-            <div class="relative h-64 md:h-96 overflow-hidden">
-                <div id="service-image-track" class="flex h-full transition-transform duration-700 ease-in-out gap-8">
-                    ${repairSlides.map(slide => `
-                        <img src="${slide.image}" alt="${slide.title}" class="w-full h-full object-cover flex-shrink-0">
-                    `).join('')}
+    // Check if mobile
+    const isMobile = window.innerWidth < 1024;
+    
+    if (isMobile) {
+        // Mobile: Single card with sliding images inside
+        serviceCards.innerHTML = `
+            <div class="bg-white border border-border rounded-2xl overflow-hidden shadow-lg">
+                <div class="relative aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-muted/30">
+                    <div id="service-image-track" class="flex h-full transition-transform duration-700 ease-in-out">
+                        ${repairSlides.map(slide => `
+                            <img src="${slide.image}" alt="${slide.title}" class="w-full h-full object-contain flex-shrink-0">
+                        `).join('')}
+                    </div>
+                    <!-- Navigation Dots -->
+                    <div id="service-dots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                        ${repairSlides.map((_, i) => `
+                            <span class="w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === 0 ? 'bg-white scale-125' : 'bg-white/40'}"></span>
+                        `).join('')}
+                    </div>
                 </div>
-                <!-- Navigation Buttons -->
-                <button onclick="prevServiceSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white" aria-label="Previous Slide">
-                    <i data-lucide="chevron-left" class="w-6 h-6"></i>
-                </button>
-                <button onclick="nextServiceSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white" aria-label="Next Slide">
-                    <i data-lucide="chevron-right" class="w-6 h-6"></i>
-                </button>
-                
-                <div id="service-dots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-                    ${repairSlides.map((_, i) => `
-                        <span class="w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === 0 ? 'bg-white scale-125' : 'bg-white/40'}"></span>
+                <div class="p-8 text-center" id="service-text-container">
+                    <h3 class="text-2xl font-bold mb-3">${repairSlides[0].title}</h3>
+                    <p class="text-muted-foreground text-lg max-w-xl mx-auto">${repairSlides[0].description}</p>
+                </div>
+            </div>
+        `;
+        initMobileServiceCards();
+    } else {
+        // Desktop: 3-card carousel with sliding effect (right -> middle -> left)
+        // Create extended array for infinite loop
+        const extendedSlides = [...repairSlides, ...repairSlides, ...repairSlides];
+        
+        serviceCards.innerHTML = `
+            <div class="container mx-auto px-4">
+                <div class="relative overflow-hidden">
+                    <div id="service-carousel-track" class="flex gap-8 transition-transform duration-700 ease-in-out -mx-4 px-4">
+                        ${extendedSlides.map((slide, i) => `
+                            <div class="flex-shrink-0 w-full md:w-[calc(33.333%-1.333rem)] bg-white border border-border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                            <div class="relative aspect-[16/9] bg-muted/30 rounded-t-2xl overflow-hidden">
+                                <img src="${slide.image}" alt="${slide.title}" class="w-full h-full object-contain">
+                            </div>
+                            <div class="p-6 text-center">
+                                <h3 class="text-xl font-bold mb-2">${slide.title}</h3>
+                                <p class="text-muted-foreground">${slide.description}</p>
+                            </div>
+                        </div>
                     `).join('')}
                 </div>
             </div>
-            <div class="p-8 text-center" id="service-text-container">
-                <h3 class="text-2xl font-bold mb-3">${repairSlides[0].title}</h3>
-                <p class="text-muted-foreground text-lg max-w-xl mx-auto">${repairSlides[0].description}</p>
+            <!-- Navigation Dots -->
+            <div id="service-carousel-dots" class="flex justify-center gap-2 mt-8">
+                ${repairSlides.map((_, i) => `
+                    <div class="w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${i === 0 ? 'bg-primary w-8' : 'bg-muted-foreground/30'}" onclick="goToServiceSlide(${i})"></div>
+                `).join('')}
             </div>
-        </div>
-    `;
+        `;
+        initDesktopServiceCarousel();
+    }
     
     lucide.createIcons();
-    initServiceCardSliders();
 }
 
-let serviceInterval;
+// Mobile service cards slider
 let currentServiceIdx = 0;
+let mobileServiceInterval;
 
-function initServiceCardSliders() {
-    startServiceInterval();
+function initMobileServiceCards() {
+    startMobileServiceInterval();
 }
 
-function startServiceInterval() {
-    clearInterval(serviceInterval);
-    serviceInterval = setInterval(() => {
+function startMobileServiceInterval() {
+    clearInterval(mobileServiceInterval);
+    mobileServiceInterval = setInterval(() => {
         moveServiceSlide(1);
     }, 4000);
-}
-
-function prevServiceSlide() {
-    moveServiceSlide(-1);
-    startServiceInterval();
-}
-
-function nextServiceSlide() {
-    moveServiceSlide(1);
-    startServiceInterval();
 }
 
 function moveServiceSlide(direction) {
@@ -236,11 +255,13 @@ function updateServiceUI(nextIdx) {
     const imageTrack = document.getElementById('service-image-track');
     const textContainer = document.getElementById('service-text-container');
     const dotsContainer = document.getElementById('service-dots');
-    if (!dotsContainer) return;
+    
+    if (!imageTrack || !textContainer || !dotsContainer) return;
+    
     const dots = dotsContainer.children;
     
     // Image Transition
-    imageTrack.style.transform = `translateX(calc(-${nextIdx} * (100% + 2rem)))`;
+    imageTrack.style.transform = `translateX(-${nextIdx * 100}%)`;
     
     // Text Transition
     textContainer.classList.add('text-fade-out');
@@ -270,6 +291,121 @@ function updateServiceUI(nextIdx) {
     });
 }
 
+// Desktop service 3-card carousel
+let currentServiceCarouselIdx = repairSlides.length; // Start at middle set
+let serviceCarouselInterval;
+let isServiceTransitioning = false;
+
+function initDesktopServiceCarousel() {
+    const track = document.getElementById('service-carousel-track');
+    if (!track) return;
+    
+    // Position at the middle set initially
+    updateServiceCarouselPosition(false);
+    
+    // Start auto-sliding
+    startServiceCarouselInterval();
+}
+
+function startServiceCarouselInterval() {
+    clearInterval(serviceCarouselInterval);
+    serviceCarouselInterval = setInterval(() => {
+        moveServiceCarousel(1);
+    }, 4000);
+}
+
+function moveServiceCarousel(direction) {
+    if (isServiceTransitioning) return;
+    
+    currentServiceCarouselIdx += direction;
+    updateServiceCarouselPosition(true);
+}
+
+function goToServiceSlide(index) {
+    if (isServiceTransitioning) return;
+    
+    clearInterval(serviceCarouselInterval);
+    currentServiceCarouselIdx = repairSlides.length + index;
+    updateServiceCarouselPosition(true);
+    startServiceCarouselInterval();
+}
+
+function updateServiceCarouselPosition(withTransition) {
+    const track = document.getElementById('service-carousel-track');
+    const dots = document.querySelectorAll('#service-carousel-dots > div');
+    
+    if (!track) return;
+    
+    isServiceTransitioning = true;
+    
+    // Enable/disable transition
+    if (withTransition) {
+        track.style.transition = 'transform 0.7s ease-in-out';
+    } else {
+        track.style.transition = 'none';
+    }
+    
+    // Calculate position - show 3 cards at once
+    const cardWidth = track.children[0].offsetWidth;
+    const gap = 32; // 2rem = 32px
+    const offset = currentServiceCarouselIdx * (cardWidth + gap);
+    
+    track.style.transform = `translateX(-${offset}px)`;
+    
+    // Update dots based on actual position in the original array
+    const actualIndex = currentServiceCarouselIdx % repairSlides.length;
+    dots.forEach((dot, i) => {
+        if (i === actualIndex) {
+            dot.classList.add('bg-primary', 'w-8');
+            dot.classList.remove('bg-muted-foreground/30');
+        } else {
+            dot.classList.remove('bg-primary', 'w-8');
+            dot.classList.add('bg-muted-foreground/30');
+        }
+    });
+    
+    // Handle infinite loop
+    if (withTransition) {
+        setTimeout(() => {
+            handleServiceCarouselLoop();
+            isServiceTransitioning = false;
+        }, 700);
+    } else {
+        isServiceTransitioning = false;
+    }
+}
+
+function handleServiceCarouselLoop() {
+    const track = document.getElementById('service-carousel-track');
+    if (!track) return;
+    
+    // If we've gone past the second set, jump back to the first set
+    if (currentServiceCarouselIdx >= repairSlides.length * 2) {
+        currentServiceCarouselIdx = repairSlides.length;
+        track.style.transition = 'none';
+        updateServiceCarouselPosition(false);
+    }
+    // If we've gone before the first set, jump to the second set
+    else if (currentServiceCarouselIdx < repairSlides.length) {
+        currentServiceCarouselIdx = repairSlides.length * 2 - 1;
+        track.style.transition = 'none';
+        updateServiceCarouselPosition(false);
+    }
+}
+
+// Old service functions - no longer used but kept for compatibility
+function initServiceCardSliders() {
+    // No longer used - service cards now use responsive carousel
+}
+
+function prevServiceSlide() {
+    // No longer used
+}
+
+function nextServiceSlide() {
+    // No longer used
+}
+
 function renderReviews() {
     const reviewsList = document.getElementById('reviews-list');
     reviewsList.innerHTML = reviews.map(review => `
@@ -289,78 +425,103 @@ function renderReviews() {
 function renderDeviceShowcase() {
     const showcaseContainer = document.getElementById('device-showcase-container');
     
-    showcaseContainer.innerHTML = `
-        <div class="service-card bg-white border border-border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow group">
-            <div class="relative h-64 md:h-96 overflow-hidden">
-                <div id="showcase-image-track" class="flex h-full transition-transform duration-700 ease-in-out gap-8">
-                    ${showcaseSlides.map(slide => `
-                        <img src="${slide.image}" alt="${slide.title}" class="w-full h-full object-cover flex-shrink-0">
-                    `).join('')}
+    // Check if mobile
+    const isMobile = window.innerWidth < 1024;
+    
+    if (isMobile) {
+        // Mobile: Single card with sliding images inside
+        showcaseContainer.innerHTML = `
+            <div class="max-w-3xl mx-auto px-4">
+                <div class="bg-white border border-border rounded-2xl overflow-hidden shadow-lg">
+                    <div class="relative aspect-[16/9] bg-muted/30 overflow-hidden">
+                        <div id="mobile-showcase-track" class="flex h-full transition-transform duration-700 ease-in-out">
+                            ${showcaseSlides.map(slide => `
+                                <img src="${slide.image}" alt="${slide.title}" class="w-full h-full object-contain flex-shrink-0">
+                            `).join('')}
+                        </div>
+                        <!-- Navigation Dots -->
+                        <div id="mobile-showcase-dots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                            ${showcaseSlides.map((_, i) => `
+                                <span class="w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === 0 ? 'bg-white scale-125' : 'bg-white/40'}"></span>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="p-8 text-center" id="mobile-showcase-text">
+                        <h3 class="text-2xl font-bold mb-3">${showcaseSlides[0].title}</h3>
+                        <p class="text-muted-foreground text-lg max-w-xl mx-auto">${showcaseSlides[0].description}</p>
+                    </div>
                 </div>
-                <!-- Navigation Buttons -->
-                <button onclick="prevShowcaseSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white" aria-label="Previous Showcase Slide">
-                    <i data-lucide="chevron-left" class="w-6 h-6"></i>
-                </button>
-                <button onclick="nextShowcaseSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white" aria-label="Next Showcase Slide">
-                    <i data-lucide="chevron-right" class="w-6 h-6"></i>
-                </button>
-
-                <div id="showcase-dots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+            </div>
+        `;
+        initMobileShowcase();
+    } else {
+        // Desktop: 3-card carousel with sliding effect (right -> middle -> left)
+        // Create extended array for infinite loop: [...slides, ...slides, ...slides]
+        const extendedSlides = [...showcaseSlides, ...showcaseSlides, ...showcaseSlides];
+        
+        showcaseContainer.innerHTML = `
+            <div class="container mx-auto px-4">
+                <div class="relative overflow-hidden">
+                    <div id="desktop-carousel-track" class="flex gap-8 transition-transform duration-700 ease-in-out -mx-4 px-4">
+                        ${extendedSlides.map((slide, i) => `
+                            <div class="flex-shrink-0 w-full md:w-[calc(33.333%-1.333rem)] bg-white border border-border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                                <div class="relative aspect-[16/9] bg-muted/30 rounded-t-2xl overflow-hidden">
+                                    <img src="${slide.image}" alt="${slide.title}" class="w-full h-full object-contain">
+                                </div>
+                                <div class="p-6 text-center">
+                                    <h3 class="text-xl font-bold mb-2">${slide.title}</h3>
+                                    <p class="text-muted-foreground">${slide.description}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                <!-- Navigation Dots -->
+                <div id="desktop-carousel-dots" class="flex justify-center gap-2 mt-8">
                     ${showcaseSlides.map((_, i) => `
-                        <span class="w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === 0 ? 'bg-white scale-125' : 'bg-white/40'}"></span>
+                        <div class="w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${i === 0 ? 'bg-primary w-8' : 'bg-muted-foreground/30'}" onclick="goToDesktopSlide(${i})"></div>
                     `).join('')}
                 </div>
             </div>
-            <div class="p-8 text-center" id="showcase-text-container">
-                <h3 class="text-2xl font-bold mb-3">${showcaseSlides[0].title}</h3>
-                <p class="text-muted-foreground text-lg max-w-xl mx-auto">${showcaseSlides[0].description}</p>
-            </div>
-        </div>
-    `;
+        `;
+        initDesktopCarousel();
+    }
     
     lucide.createIcons();
-    initDeviceShowcaseSlider();
 }
 
-let showcaseInterval;
-let currentShowcaseIdx = 0;
+// Mobile showcase slider
+let currentMobileShowcaseIdx = 0;
+let mobileShowcaseInterval;
 
-function initDeviceShowcaseSlider() {
-    startShowcaseInterval();
+function initMobileShowcase() {
+    startMobileShowcaseInterval();
 }
 
-function startShowcaseInterval() {
-    clearInterval(showcaseInterval);
-    showcaseInterval = setInterval(() => {
-        moveShowcaseSlide(1);
+function startMobileShowcaseInterval() {
+    clearInterval(mobileShowcaseInterval);
+    mobileShowcaseInterval = setInterval(() => {
+        moveMobileShowcaseSlide(1);
     }, 4000);
 }
 
-function prevShowcaseSlide() {
-    moveShowcaseSlide(-1);
-    startShowcaseInterval();
+function moveMobileShowcaseSlide(direction) {
+    const nextIdx = (currentMobileShowcaseIdx + direction + showcaseSlides.length) % showcaseSlides.length;
+    updateMobileShowcaseUI(nextIdx);
+    currentMobileShowcaseIdx = nextIdx;
 }
 
-function nextShowcaseSlide() {
-    moveShowcaseSlide(1);
-    startShowcaseInterval();
-}
-
-function moveShowcaseSlide(direction) {
-    const nextIdx = (currentShowcaseIdx + direction + showcaseSlides.length) % showcaseSlides.length;
-    updateShowcaseUI(nextIdx);
-    currentShowcaseIdx = nextIdx;
-}
-
-function updateShowcaseUI(nextIdx) {
-    const imageTrack = document.getElementById('showcase-image-track');
-    const textContainer = document.getElementById('showcase-text-container');
-    const dotsContainer = document.getElementById('showcase-dots');
-    if (!dotsContainer) return;
+function updateMobileShowcaseUI(nextIdx) {
+    const imageTrack = document.getElementById('mobile-showcase-track');
+    const textContainer = document.getElementById('mobile-showcase-text');
+    const dotsContainer = document.getElementById('mobile-showcase-dots');
+    
+    if (!imageTrack || !textContainer || !dotsContainer) return;
+    
     const dots = dotsContainer.children;
     
     // Image Transition
-    imageTrack.style.transform = `translateX(calc(-${nextIdx} * (100% + 2rem)))`;
+    imageTrack.style.transform = `translateX(-${nextIdx * 100}%)`;
     
     // Text Transition
     textContainer.classList.add('text-fade-out');
@@ -388,6 +549,274 @@ function updateShowcaseUI(nextIdx) {
             dot.classList.add('bg-white/40');
         }
     });
+}
+
+// Desktop 3-card carousel
+let currentDesktopCarouselIdx = showcaseSlides.length; // Start at middle set
+let desktopCarouselInterval;
+let isDesktopTransitioning = false;
+
+function initDesktopCarousel() {
+    const track = document.getElementById('desktop-carousel-track');
+    if (!track) return;
+    
+    // Position at the middle set initially (showing cards 0, 1, 2)
+    updateDesktopCarouselPosition(false);
+    
+    // Start auto-sliding
+    startDesktopCarouselInterval();
+}
+
+function startDesktopCarouselInterval() {
+    clearInterval(desktopCarouselInterval);
+    desktopCarouselInterval = setInterval(() => {
+        moveDesktopCarousel(1);
+    }, 4000);
+}
+
+function moveDesktopCarousel(direction) {
+    if (isDesktopTransitioning) return;
+    
+    currentDesktopCarouselIdx += direction;
+    updateDesktopCarouselPosition(true);
+}
+
+function goToDesktopSlide(index) {
+    if (isDesktopTransitioning) return;
+    
+    clearInterval(desktopCarouselInterval);
+    currentDesktopCarouselIdx = showcaseSlides.length + index;
+    updateDesktopCarouselPosition(true);
+    startDesktopCarouselInterval();
+}
+
+function updateDesktopCarouselPosition(withTransition) {
+    const track = document.getElementById('desktop-carousel-track');
+    const dots = document.querySelectorAll('#desktop-carousel-dots > div');
+    
+    if (!track) return;
+    
+    isDesktopTransitioning = true;
+    
+    // Enable/disable transition
+    if (withTransition) {
+        track.style.transition = 'transform 0.7s ease-in-out';
+    } else {
+        track.style.transition = 'none';
+    }
+    
+    // Calculate position - show 3 cards at once
+    // Each card is 33.333% width + gap
+    const cardWidth = track.children[0].offsetWidth;
+    const gap = 32; // 2rem = 32px
+    const offset = currentDesktopCarouselIdx * (cardWidth + gap);
+    
+    track.style.transform = `translateX(-${offset}px)`;
+    
+    // Update dots based on actual position in the original array
+    const actualIndex = currentDesktopCarouselIdx % showcaseSlides.length;
+    dots.forEach((dot, i) => {
+        if (i === actualIndex) {
+            dot.classList.add('bg-primary', 'w-8');
+            dot.classList.remove('bg-muted-foreground/30');
+        } else {
+            dot.classList.remove('bg-primary', 'w-8');
+            dot.classList.add('bg-muted-foreground/30');
+        }
+    });
+    
+    // Handle infinite loop
+    if (withTransition) {
+        setTimeout(() => {
+            handleDesktopCarouselLoop();
+            isDesktopTransitioning = false;
+        }, 700);
+    } else {
+        isDesktopTransitioning = false;
+    }
+}
+
+function handleDesktopCarouselLoop() {
+    const track = document.getElementById('desktop-carousel-track');
+    if (!track) return;
+    
+    // If we've gone past the second set, jump back to the first set
+    if (currentDesktopCarouselIdx >= showcaseSlides.length * 2) {
+        currentDesktopCarouselIdx = showcaseSlides.length;
+        track.style.transition = 'none';
+        updateDesktopCarouselPosition(false);
+    }
+    // If we've gone before the first set, jump to the second set
+    else if (currentDesktopCarouselIdx < showcaseSlides.length) {
+        currentDesktopCarouselIdx = showcaseSlides.length * 2 - 1;
+        track.style.transition = 'none';
+        updateDesktopCarouselPosition(false);
+    }
+}
+
+// Re-render on window resize with improved debouncing
+let resizeTimeout;
+let lastWidth = window.innerWidth;
+
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        const currentWidth = window.innerWidth;
+        const wasMobile = document.getElementById('mobile-showcase-track') !== null;
+        const isMobile = currentWidth < 1024;
+        
+        // Only re-render if we're switching between mobile and desktop
+        if (wasMobile !== isMobile) {
+            // Clear all intervals before re-rendering
+            clearInterval(mobileShowcaseInterval);
+            clearInterval(mobileServiceInterval);
+            clearInterval(desktopCarouselInterval);
+            clearInterval(serviceCarouselInterval);
+            
+            renderDeviceShowcase();
+            renderServiceCards();
+        } else if (!isMobile && Math.abs(currentWidth - lastWidth) > 50) {
+            // On desktop resize (only if significant change), update carousel positions
+            requestAnimationFrame(() => {
+                updateDesktopCarouselPosition(false);
+                updateServiceCarouselPosition(false);
+            });
+        }
+        
+        lastWidth = currentWidth;
+    }, 150);
+}, { passive: true });
+
+// Old showcase functions - no longer used but kept for compatibility
+let currentShowcaseIdx = 1;
+let isTransitioning = false;
+let showcaseInterval;
+
+function initDeviceShowcaseSlider() {
+
+
+
+    updateShowcaseUI(false);
+    startShowcaseInterval();
+    
+    window.addEventListener('resize', debounce(() => {
+        updateShowcaseUI(false);
+    }, 100));
+}
+
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+function startShowcaseInterval() {
+    clearInterval(showcaseInterval);
+    showcaseInterval = setInterval(() => {
+        nextShowcaseSlide();
+    }, 5000);
+}
+
+function prevShowcaseSlide() {
+    if (isTransitioning) return;
+    moveShowcaseSlide(-1);
+    startShowcaseInterval();
+}
+
+function nextShowcaseSlide() {
+    if (isTransitioning) return;
+    moveShowcaseSlide(1);
+    startShowcaseInterval();
+}
+
+function goToShowcaseSlide(idx) {
+    if (isTransitioning) return;
+    currentShowcaseIdx = idx + 1;
+    updateShowcaseUI(true);
+    startShowcaseInterval();
+}
+
+function moveShowcaseSlide(direction) {
+    currentShowcaseIdx += direction;
+    updateShowcaseUI(true);
+}
+
+function updateShowcaseUI(withTransition) {
+    const track = document.getElementById('showcase-track');
+    const slides = document.querySelectorAll('.showcase-slide');
+    const dots = document.querySelectorAll('.showcase-dot');
+    if (!track || slides.length === 0) return;
+
+    isTransitioning = true;
+    
+    if (withTransition) {
+        track.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+    } else {
+        track.style.transition = 'none';
+    }
+
+    // Get computed gap and slide width
+    const computedStyle = window.getComputedStyle(track);
+    const gap = parseFloat(computedStyle.gap) || 0;
+    const slideWidth = slides[0].offsetWidth;
+    const containerWidth = track.parentElement.offsetWidth;
+    
+    // Offset to center the current slide perfectly
+    const centerOffset = (containerWidth - slideWidth) / 2;
+    const moveAmount = -(currentShowcaseIdx * (slideWidth + gap)) + centerOffset;
+    
+    track.style.transform = `translateX(${moveAmount}px)`;
+
+    // Update active classes for scaling effect
+    slides.forEach((slide, i) => {
+        if (i === currentShowcaseIdx) {
+            slide.classList.add('active');
+        } else {
+            slide.classList.remove('active');
+        }
+    });
+
+    // Update dots
+    let dotIdx = currentShowcaseIdx - 1;
+    if (dotIdx < 0) dotIdx = showcaseSlides.length - 1;
+    if (dotIdx >= showcaseSlides.length) dotIdx = 0;
+    
+    dots.forEach((dot, i) => {
+        if (i === dotIdx) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+
+    // Handle loop after transition
+    if (withTransition) {
+        setTimeout(() => {
+            handleLoop(track);
+            isTransitioning = false;
+        }, 600);
+    } else {
+        handleLoop(track);
+        isTransitioning = false;
+    }
+}
+
+function handleLoop(track) {
+    if (currentShowcaseIdx <= 0) {
+        currentShowcaseIdx = showcaseSlides.length;
+        track.style.transition = 'none';
+        updateShowcaseUI(false);
+    } else if (currentShowcaseIdx >= showcaseSlides.length + 1) {
+        currentShowcaseIdx = 1;
+        track.style.transition = 'none';
+        updateShowcaseUI(false);
+    }
 }
 
 // Logic Functions
@@ -512,68 +941,238 @@ function resetInquiry() {
     selectedProblem = "";
 }
 
-// Liquid Glass Draggability
-document.querySelectorAll('.liquid-glass').forEach(el => {
-    let isDragging = false;
-    let currentX = 0;
-    let currentY = 0;
-    let initialX = 0;
-    let initialY = 0;
-    let xOffset = 0;
-    let yOffset = 0;
+// Liquid Glass Draggability is disabled to keep buttons fixed in place.
 
-    el.style.transform = `translate3d(${xOffset}px, ${yOffset}px, 0)`;
+// ============================================
+// PREMIUM 2026 ENHANCEMENTS
+// ============================================
 
-    el.addEventListener('mousedown', dragStart);
-    document.addEventListener('mousemove', dragMove);
-    document.addEventListener('mouseup', dragEnd);
+// Intersection Observer for scroll animations
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
 
-    el.addEventListener('touchstart', dragStart, { passive: false });
-    document.addEventListener('touchmove', dragMove, { passive: false });
-    document.addEventListener('touchend', dragEnd);
+const fadeInObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, observerOptions);
 
-    function dragStart(e) {
-        if (e.type === "touchstart") {
-            initialX = e.touches[0].clientX - xOffset;
-            initialY = e.touches[0].clientY - yOffset;
+// Initialize scroll animations
+function initScrollAnimations() {
+    // Add fade-in-up class to sections
+    const sections = document.querySelectorAll('section');
+    sections.forEach((section, index) => {
+        section.classList.add('fade-in-up');
+        if (index > 0) { // Skip first section for immediate visibility
+            fadeInObserver.observe(section);
         } else {
-            initialX = e.clientX - xOffset;
-            initialY = e.clientY - yOffset;
+            section.classList.add('visible');
         }
+    });
 
-        if (e.target.closest('.liquid-glass') === el) {
-            isDragging = true;
-            el.classList.add('dragging');
-        }
+    // Add stagger effect to review cards
+    const reviewCards = document.querySelectorAll('#reviews-list > div');
+    reviewCards.forEach((card, index) => {
+        card.classList.add('fade-in-up', `stagger-${Math.min(index + 1, 6)}`);
+        fadeInObserver.observe(card);
+    });
+
+    // Add stagger effect to FAQ items
+    const faqItems = document.querySelectorAll('#faq .border');
+    faqItems.forEach((item, index) => {
+        item.classList.add('fade-in-up', `stagger-${Math.min(index + 1, 6)}`);
+        fadeInObserver.observe(item);
+    });
+}
+
+// Ripple effect on button clicks
+function createRipple(event) {
+    const button = event.currentTarget;
+    const ripple = document.createElement('span');
+    const rect = button.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = event.clientX - rect.left - size / 2;
+    const y = event.clientY - rect.top - size / 2;
+
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = x + 'px';
+    ripple.style.top = y + 'px';
+    ripple.classList.add('ripple');
+
+    button.appendChild(ripple);
+
+    setTimeout(() => {
+        ripple.remove();
+    }, 600);
+}
+
+// Add ripple effect to all buttons
+function initRippleEffects() {
+    const buttons = document.querySelectorAll('button, a[class*="bg-"]');
+    buttons.forEach(button => {
+        button.style.position = 'relative';
+        button.style.overflow = 'hidden';
+        button.addEventListener('click', createRipple);
+    });
+}
+
+// Enhanced navbar on scroll
+let lastScroll = 0;
+function handleNavbarScroll() {
+    const navbar = document.querySelector('nav');
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll > 50) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
     }
 
-    function dragMove(e) {
-        if (isDragging) {
+    lastScroll = currentScroll;
+}
+
+// Throttled scroll handler for performance
+let ticking = false;
+function onScroll() {
+    if (!ticking) {
+        window.requestAnimationFrame(() => {
+            handleNavbarScroll();
+            handleParallax();
+            ticking = false;
+        });
+        ticking = true;
+    }
+}
+
+// Parallax effect for hero section
+function handleParallax() {
+    const heroSection = document.querySelector('section');
+    if (!heroSection) return;
+
+    const scrolled = window.pageYOffset;
+    const parallaxElements = heroSection.querySelectorAll('.absolute');
+    
+    parallaxElements.forEach((el, index) => {
+        const speed = 0.5 + (index * 0.1);
+        const yPos = -(scrolled * speed);
+        el.style.transform = `translateY(${yPos}px)`;
+    });
+}
+
+// Add gradient overlay to cards on hover
+function initCardEnhancements() {
+    const cards = document.querySelectorAll('.bg-white.border');
+    cards.forEach(card => {
+        card.classList.add('gradient-overlay');
+    });
+}
+
+// Smooth scroll to anchor links
+function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href === '#' || href === '') return;
+            
             e.preventDefault();
-
-            if (e.type === "touchmove") {
-                currentX = e.touches[0].clientX - initialX;
-                currentY = e.touches[0].clientY - initialY;
-            } else {
-                currentX = e.clientX - initialX;
-                currentY = e.clientY - initialY;
+            const target = document.querySelector(href);
+            if (target) {
+                const offset = 80; // Account for fixed navbar
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
             }
+        });
+    });
+}
 
-            xOffset = currentX;
-            yOffset = currentY;
+// Add hover effects to navigation links
+function initNavLinkEffects() {
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    navLinks.forEach(link => {
+        link.classList.add('nav-link');
+    });
+}
 
-            setTranslate(currentX, currentY, el);
+// Animate numbers (for future stats section)
+function animateNumber(element, target, duration = 2000) {
+    const start = 0;
+    const increment = target / (duration / 16);
+    let current = start;
+
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            element.textContent = Math.round(target);
+            clearInterval(timer);
+        } else {
+            element.textContent = Math.round(current);
         }
-    }
+    }, 16);
+}
 
-    function dragEnd() {
-        initialX = currentX;
-        initialY = currentY;
-        isDragging = false;
-        el.classList.remove('dragging');
-    }
+// Enhanced image loading
+function initImageLoading() {
+    const images = document.querySelectorAll('img');
+    images.forEach(img => {
+        if (!img.complete) {
+            img.style.opacity = '0';
+            img.addEventListener('load', () => {
+                img.style.transition = 'opacity 0.6s ease-in-out';
+                img.style.opacity = '1';
+            });
+        }
+    });
+}
 
-    function setTranslate(xPos, yPos, el) {
-        el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
+// Add floating animation to hero badge
+function initFloatingElements() {
+    const heroBadge = document.querySelector('section span.inline-block');
+    if (heroBadge) {
+        heroBadge.classList.add('float-animation');
+    }
+}
+
+// Initialize all premium enhancements
+function initPremiumEnhancements() {
+    initScrollAnimations();
+    initRippleEffects();
+    initCardEnhancements();
+    initSmoothScroll();
+    initNavLinkEffects();
+    initImageLoading();
+    initFloatingElements();
+    
+    // Add scroll listener
+    window.addEventListener('scroll', onScroll, { passive: true });
+    
+    // Initial navbar state
+    handleNavbarScroll();
+}
+
+// Run premium enhancements after DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Wait for existing initialization to complete
+    setTimeout(() => {
+        initPremiumEnhancements();
+    }, 100);
+});
+
+// Add page visibility change handler for performance
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        // Pause animations when page is hidden
+        document.body.style.animationPlayState = 'paused';
+    } else {
+        // Resume animations when page is visible
+        document.body.style.animationPlayState = 'running';
     }
 });
+
