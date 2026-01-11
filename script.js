@@ -251,30 +251,31 @@ function renderServiceCards() {
     if (isMobile) {
         // Mobile: Single card with sliding images inside
         serviceCards.innerHTML = `
-            <div class="bg-white border border-border rounded-2xl overflow-hidden shadow-lg">
-                <div class="relative aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-muted/30">
-                    <div id="service-image-track" class="flex h-full transition-transform duration-700 ease-in-out">
-                        ${repairSlides.map(slide => `
-                            <img src="${slide.image}" alt="${slide.title}" class="w-full h-full object-contain flex-shrink-0">
-                        `).join('')}
+            <div class="max-w-3xl mx-auto px-4">
+                <div class="bg-white border border-border rounded-2xl overflow-hidden shadow-lg">
+                    <div class="relative aspect-[16/9] bg-muted/30 overflow-hidden">
+                        <div id="service-image-track" class="flex h-full transition-transform duration-700 ease-in-out">
+                            ${repairSlides.map(slide => `
+                                <img src="${slide.image}" alt="${slide.title}" class="w-full h-full object-contain flex-shrink-0">
+                            `).join('')}
+                        </div>
+                        <!-- Navigation Dots -->
+                        <div id="service-dots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                            ${repairSlides.map((_, i) => `
+                                <span class="w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === 0 ? 'bg-white scale-125' : 'bg-white/40'}"></span>
+                            `).join('')}
+                        </div>
                     </div>
-                    <!-- Navigation Dots -->
-                    <div id="service-dots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-                        ${repairSlides.map((_, i) => `
-                            <span class="w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === 0 ? 'bg-white scale-125' : 'bg-white/40'}"></span>
-                        `).join('')}
+                    <div class="p-8 text-center" id="service-text-container">
+                        <h3 class="text-2xl font-bold mb-3">${repairSlides[0].title}</h3>
+                        <p class="text-muted-foreground text-lg max-w-xl mx-auto">${repairSlides[0].description}</p>
                     </div>
-                </div>
-                <div class="p-8 text-center" id="service-text-container">
-                    <h3 class="text-2xl font-bold mb-3">${repairSlides[0].title}</h3>
-                    <p class="text-muted-foreground text-lg max-w-xl mx-auto">${repairSlides[0].description}</p>
                 </div>
             </div>
         `;
         initMobileServiceCards();
     } else {
         // Desktop: 3-card carousel with sliding effect (right -> middle -> left)
-        // Create extended array for infinite loop
         const extendedSlides = [...repairSlides, ...repairSlides, ...repairSlides];
         
         serviceCards.innerHTML = `
@@ -283,22 +284,23 @@ function renderServiceCards() {
                     <div id="service-carousel-track" class="flex gap-8 transition-transform duration-700 ease-in-out -mx-4 px-4">
                         ${extendedSlides.map((slide, i) => `
                             <div class="flex-shrink-0 w-full md:w-[calc(33.333%-1.333rem)] bg-white border border-border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-                            <div class="relative aspect-[16/9] bg-muted/30 rounded-t-2xl overflow-hidden">
-                                <img src="${slide.image}" alt="${slide.title}" class="w-full h-full object-contain">
+                                <div class="relative aspect-[16/9] bg-muted/30 rounded-t-2xl overflow-hidden">
+                                    <img src="${slide.image}" alt="${slide.title}" class="w-full h-full object-contain">
+                                </div>
+                                <div class="p-6 text-center">
+                                    <h3 class="text-xl font-bold mb-2">${slide.title}</h3>
+                                    <p class="text-muted-foreground">${slide.description}</p>
+                                </div>
                             </div>
-                            <div class="p-6 text-center">
-                                <h3 class="text-xl font-bold mb-2">${slide.title}</h3>
-                                <p class="text-muted-foreground">${slide.description}</p>
-                            </div>
-                        </div>
+                        `).join('')}
+                    </div>
+                </div>
+                <!-- Navigation Dots -->
+                <div id="service-carousel-dots" class="flex justify-center gap-2 mt-8">
+                    ${repairSlides.map((_, i) => `
+                        <div class="w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${i === 0 ? 'bg-primary w-8' : 'bg-muted-foreground/30'}" onclick="goToServiceSlide(${i})"></div>
                     `).join('')}
                 </div>
-            </div>
-            <!-- Navigation Dots -->
-            <div id="service-carousel-dots" class="flex justify-center gap-2 mt-8">
-                ${repairSlides.map((_, i) => `
-                    <div class="w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${i === 0 ? 'bg-primary w-8' : 'bg-muted-foreground/30'}" onclick="goToServiceSlide(${i})"></div>
-                `).join('')}
             </div>
         `;
         initDesktopServiceCarousel();

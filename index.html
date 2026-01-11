@@ -104,10 +104,10 @@
                                 Instant Repair
                               </button>
 
-                            <a href="tel:9123456789" class="inline-flex items-center justify-center bg-white border-2 border-primary text-primary h-14 px-8 text-lg font-medium rounded-md hover:bg-primary hover:text-white transition-all duration-200 shadow-md hover:shadow-lg">
-                              <i data-lucide="phone" class="w-5 h-5 mr-2"></i>
-                              Call Now
-                            </a>
+                              <a href="tel:9123456789" class="btn-call-now inline-flex items-center justify-center h-14 px-8 text-lg font-medium rounded-md transition-all duration-200 shadow-md hover:shadow-lg">
+                                <i data-lucide="phone" class="w-5 h-5 mr-2"></i>
+                                Call Now
+                              </a>
                         </div>
                         <div class="mt-12 flex items-center justify-center lg:justify-start gap-8 text-muted-foreground">
                             <div class="flex items-center gap-2">
@@ -161,9 +161,14 @@
             <div class="max-w-4xl mx-auto px-4 py-12">
                 <div class="mb-8 flex items-center justify-between">
                     <div>
-                        <h2 class="text-3xl font-bold tracking-tight">Get a Free Quote in Minutes</h2>
-                        <p class="text-muted-foreground">Tell us what's wrong — we'll reply on WhatsApp.</p>
-                    </div>
+                          <h2 class="text-3xl font-bold tracking-tight">Get a Free Quote in Minutes</h2>
+                          <p class="text-muted-foreground mb-4">Tell us what's wrong — we'll reply on WhatsApp.</p>
+                          <a href="https://checkcoverage.apple.com/?locale=en_IN" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-secondary text-secondary-foreground rounded-lg text-sm font-medium hover:bg-secondary/80 transition-all border border-border shadow-sm">
+                              <i data-lucide="shield" class="w-4 h-4 text-blue-500"></i>
+                              Check Apple Warranty (Official Apple Website)
+                              <i data-lucide="external-link" class="w-3.5 h-3.5 opacity-50"></i>
+                          </a>
+                      </div>
                     <div class="flex gap-2" id="step-indicators">
                         <div class="h-1.5 w-8 rounded-full bg-primary" data-step="1"></div>
                         <div class="h-1.5 w-8 rounded-full bg-muted" data-step="2"></div>
@@ -263,22 +268,23 @@
         </div>
     </div>
 
-        <!-- Services Section -->
-        <section id="services" class="py-24">
-            <div class="w-full mx-auto">
-                <div class="text-center mb-10 px-4">
-                    <h2 class="text-3xl font-bold tracking-tight">What We Can Fix</h2>
-                    <p class="text-muted-foreground max-w-2xl mx-auto">
-                        From simple screen replacements to complex motherboard repairs, 
-                        we handle everything with precision and care.
-                    </p>
-                </div>
-                
-                <div class="relative w-full" id="service-cards">
-                    <!-- Carousel will be injected here -->
-                </div>
-            </div>
-        </section>
+          <!-- Services Section -->
+          <section id="services" class="bg-white border-y py-12 overflow-hidden">
+              <div class="w-full mx-auto">
+                  <div class="text-center mb-10 px-4">
+                      <span class="inline-block mb-2 py-1 px-3 text-xs font-semibold border border-border rounded-full">Services</span>
+                      <h2 class="text-3xl font-bold tracking-tight">What We Can Fix</h2>
+                      <p class="text-muted-foreground max-w-2xl mx-auto mt-2">
+                          From simple screen replacements to complex motherboard repairs, 
+                          we handle everything with precision and care.
+                      </p>
+                  </div>
+                  
+                  <div class="relative w-full" id="service-cards">
+                      <!-- Carousel will be injected here -->
+                  </div>
+              </div>
+          </section>
 
         <!-- Reviews Section -->
         <section id="reviews" class="py-24 bg-accent/30">

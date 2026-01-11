@@ -344,6 +344,24 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Call Now Button */
+.btn-call-now {
+    background-color: #007aff !important; /* Apple Blue */
+    color: white !important;
+    border: none !important;
+}
+
+.btn-call-now:hover {
+    background-color: #0063cc !important;
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3) !important;
+}
+
+.btn-call-now:active {
+    background-color: white !important;
+    color: #007aff !important;
+    transform: scale(0.98);
+}
+
 /* Back button override */
 .no-hover-animation:hover {
     transform: none !important;
