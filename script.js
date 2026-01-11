@@ -19,6 +19,11 @@ const repairSlides = [
         title: "Apple Watch Repair",
         description: "Screen replacement, battery issues, and sensor repairs for all Apple Watch models.",
         image: "images/service-watch.webp"
+    },
+    {
+        title: "Mac Mini Services",
+        description: "Power supply repair, port replacements, overheating issues, and SSD upgrades.",
+        image: "images/service-macbook.png"
     }
 ];
 
@@ -42,6 +47,11 @@ const showcaseSlides = [
         title: "Apple Watch Repair",
         description: "Screen replacement, battery issues, and sensor repairs for all Apple Watch models.",
         image: "images/showcase-watch.webp"
+    },
+    {
+        title: "Mac Mini Services",
+        description: "Power supply repair, port replacements, overheating issues, and SSD upgrades.",
+        image: "images/showcase-mac.webp"
     }
 ];
 
@@ -128,6 +138,18 @@ const deviceIcons = {
         <rect x="26" y="44" width="12" height="8" fill="currentColor" opacity="0.2"/>
         <rect x="18" y="52" width="28" height="2" rx="1" fill="currentColor" opacity="0.3"/>
     </svg>`,
+
+    macmini: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="miniGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#9ca3af;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#4b5563;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+        <rect x="12" y="16" width="40" height="32" rx="4" fill="url(#miniGrad)" stroke="currentColor" stroke-width="2"/>
+        <circle cx="32" cy="32" r="6" fill="currentColor" opacity="0.15"/>
+        <rect x="16" y="42" width="32" height="1" rx="0.5" fill="black" opacity="0.2"/>
+    </svg>`,
     
     other: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -147,6 +169,7 @@ const devices = [
     { id: "ipad", name: "iPad", icon: "ipad" },
     { id: "watch", name: "Apple Watch", icon: "watch" },
     { id: "imac", name: "iMac", icon: "imac" },
+    { id: "macmini", name: "Mac Mini", icon: "macmini" },
     { id: "other", name: "Other", icon: "other" },
 ];
 
@@ -186,6 +209,16 @@ const deviceProblems = {
         "Something else — let's chat"
     ],
     imac: [
+        "Won't turn on or power issues",
+        "Screen issues or lines",
+        "Slow performance or freezing",
+        "Something else — let's chat"
+    ],
+    macmini: [
+        "Won't turn on or power issues",
+        "Overheating or loud fan",
+        "Bluetooth or Wi-Fi issues",
+        "Slow performance or freezing",
         "Something else — let's chat"
     ],
     other: [
