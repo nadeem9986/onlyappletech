@@ -234,7 +234,7 @@ function renderDevices() {
     const deviceList = document.getElementById('device-list');
     deviceList.innerHTML = devices.map(device => `
         <div class="device-card bg-white border border-border p-8 rounded-xl flex flex-col items-center justify-center cursor-pointer transition-all hover:shadow-lg hover:scale-105 hover:border-primary/50" onclick="handleDeviceSelect('${device.id}')">
-            <div class="device-icon w-16 h-16 mb-4 transition-transform hover:scale-110">
+            <div class="device-icon w-16 h-16 mb-4 transition-transform hover:scale-150">
                 ${deviceIcons[device.icon]}
             </div>
             <span class="font-semibold text-gray-800">${device.name}</span>
@@ -671,7 +671,6 @@ function updateDesktopCarouselPosition(withTransition) {
     }
     
     // Calculate position - show 3 cards at once
-    // Each card is 33.333% width + gap
     const cardWidth = track.children[0].offsetWidth;
     const gap = 32; // 2rem = 32px
     const offset = currentDesktopCarouselIdx * (cardWidth + gap);
@@ -781,9 +780,9 @@ function renderProblems() {
     problemList.innerHTML = problems.map(problem => {
         const escapedProblem = problem.replace(/'/g, "\\'");
         return `
-            <div class="bg-white border border-border p-6 rounded-xl flex items-center justify-between cursor-pointer transition-all hover:bg-accent/50 ${problem === "Something else — let's chat" ? 'border-green-500/50' : ''}" onclick="handleProblemSelect('${escapedProblem}')">
+            <div class="bg-white border border-border p-6 rounded-xl flex items-center justify-between cursor-pointer transition-all hover:bg-accent/50 ${problem === "Something else — let's chat" ? 'card-frosted-green' : ''}" onclick="handleProblemSelect('${escapedProblem}')">
                 <div class="flex items-center gap-3">
-                    ${problem === "Something else — let's chat" ? '<i data-lucide="message-circle" class="w-5 h-5 text-green-500"></i>' : ''}
+                    ${problem === "Something else — let's chat" ? '<i data-lucide="message-circle" class="w-5 h-5 text-green-600"></i>' : ''}
                     <span class="font-medium">${problem}</span>
                 </div>
                 <i data-lucide="chevron-right" class="w-4 h-4 text-muted-foreground"></i>
@@ -815,28 +814,6 @@ function goToStep(step) {
     });
     
     lucide.createIcons();
-}
-
-function goToServiceSlide(idx) {
-    currentServiceSlide = idx;
-    updateServiceCarousel();
-}
-
-function updateServiceCarousel() {
-    const track = document.getElementById('service-track');
-    const dots = document.getElementById('service-dots');
-    
-    track.style.transform = `translateX(-${currentServiceSlide * 100}%)`;
-    
-    Array.from(dots.children).forEach((dot, idx) => {
-        if (idx === currentServiceSlide) {
-            dot.classList.add('bg-primary', 'w-8');
-            dot.classList.remove('bg-muted-foreground/30');
-        } else {
-            dot.classList.remove('bg-primary', 'w-8');
-            dot.classList.add('bg-muted-foreground/30');
-        }
-    });
 }
 
 // Form Submission
@@ -875,8 +852,6 @@ function resetInquiry() {
     selectedProblem = "";
 }
 
-// Liquid Glass Draggability is disabled to keep buttons fixed in place.
-
 // ============================================
 // PREMIUM 2026 ENHANCEMENTS
 // ============================================
@@ -897,25 +872,22 @@ const fadeInObserver = new IntersectionObserver((entries) => {
 
 // Initialize scroll animations
 function initScrollAnimations() {
-    // Add fade-in-up class to sections
     const sections = document.querySelectorAll('section');
     sections.forEach((section, index) => {
         section.classList.add('fade-in-up');
-        if (index > 0) { // Skip first section for immediate visibility
+        if (index > 0) {
             fadeInObserver.observe(section);
         } else {
             section.classList.add('visible');
         }
     });
 
-    // Add stagger effect to review cards
     const reviewCards = document.querySelectorAll('#reviews-list > div');
     reviewCards.forEach((card, index) => {
         card.classList.add('fade-in-up', `stagger-${Math.min(index + 1, 6)}`);
         fadeInObserver.observe(card);
     });
 
-    // Add stagger effect to FAQ items
     const faqItems = document.querySelectorAll('#faq .border');
     faqItems.forEach((item, index) => {
         item.classList.add('fade-in-up', `stagger-${Math.min(index + 1, 6)}`);
@@ -955,7 +927,6 @@ function initRippleEffects() {
 }
 
 // Enhanced navbar on scroll
-let lastScroll = 0;
 function handleNavbarScroll() {
     const navbar = document.querySelector('nav');
     const currentScroll = window.pageYOffset;
@@ -965,11 +936,9 @@ function handleNavbarScroll() {
     } else {
         navbar.classList.remove('scrolled');
     }
-
-    lastScroll = currentScroll;
 }
 
-// Throttled scroll handler for performance
+// Throttled scroll handler
 let ticking = false;
 function onScroll() {
     if (!ticking) {
@@ -1015,7 +984,7 @@ function initSmoothScroll() {
             e.preventDefault();
             const target = document.querySelector(href);
             if (target) {
-                const offset = 80; // Account for fixed navbar
+                const offset = 80;
                 const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
                 
                 window.scrollTo({
@@ -1033,23 +1002,6 @@ function initNavLinkEffects() {
     navLinks.forEach(link => {
         link.classList.add('nav-link');
     });
-}
-
-// Animate numbers (for future stats section)
-function animateNumber(element, target, duration = 2000) {
-    const start = 0;
-    const increment = target / (duration / 16);
-    let current = start;
-
-    const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-            element.textContent = Math.round(target);
-            clearInterval(timer);
-        } else {
-            element.textContent = Math.round(current);
-        }
-    }, 16);
 }
 
 // Enhanced image loading
@@ -1084,29 +1036,22 @@ function initPremiumEnhancements() {
     initImageLoading();
     initFloatingElements();
     
-    // Add scroll listener
     window.addEventListener('scroll', onScroll, { passive: true });
-    
-    // Initial navbar state
     handleNavbarScroll();
 }
 
-// Run premium enhancements after DOM is loaded
+// Run premium enhancements
 document.addEventListener('DOMContentLoaded', () => {
-    // Wait for existing initialization to complete
     setTimeout(() => {
         initPremiumEnhancements();
     }, 100);
 });
 
-// Add page visibility change handler for performance
+// Performance performance handler
 document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
-        // Pause animations when page is hidden
         document.body.style.animationPlayState = 'paused';
     } else {
-        // Resume animations when page is visible
         document.body.style.animationPlayState = 'running';
     }
 });
-
